@@ -1,66 +1,52 @@
-# Tugas 1 — Membaca Pohon (Tree-sitter + Python)
+# Tugas 1: Membaca Pohon Tree-sitter
 
-Praktikum PLP — Tugas 1 dari materi Tree-sitter. Folder ini **hanya** memuat Tugas 1
-(membaca pohon, node bernama vs anonim, ERROR/MISSING).
+Tugas 1 praktikum PLP. Parse potongan kode Python pakai tree-sitter, lalu baca pohon yang dihasilkan.
 
-## Isi
-
-| File | Isi |
-| --- | --- |
-| `t1.py` | Skrip utama: parse 3 potongan kode, cetak pohon, cetak node anonim, uji ERROR |
-| `t1b_missing.py` | Pembanding: kode JavaScript rusak yang menghasilkan `MISSING ")"` |
-| `pohon-perkiraan.txt` | Pohon yang saya perkirakan **sebelum** run + selisihnya dengan hasil nyata |
-| `out/t1.txt` | Keluaran nyata `t1.py` |
-| `out/t1b_missing.txt` | Keluaran nyata `t1b_missing.py` |
-
-## Pasang (sekali saja)
+## Cara jalan
 
 ```bash
+git clone https://github.com/iqbalnsola/plp-tree-sitter.git
+cd plp-tree-sitter
 uv venv .venv
 uv pip install --python .venv/Scripts/python.exe tree-sitter tree-sitter-python tree-sitter-javascript
+.venv/Scripts/python.exe t1.py
 ```
 
-Alternatif dengan pip biasa:
+Di Windows bisa juga dobel klik `run.bat`.
+
+Kalau tidak pakai `uv`, ganti dua baris tengahnya dengan:
 
 ```bash
 python -m venv .venv
 .venv/Scripts/pip install tree-sitter tree-sitter-python tree-sitter-javascript
 ```
 
-## Jalankan
+## Isi folder
 
-```bash
-.venv/Scripts/python.exe t1.py
-```
+`t1.py`
+Parse tiga potongan kode (fungsi, if/else, kelas) dan cetak pohonnya. Lalu cetak anak-anak node `function_definition` dan `parameters` untuk membedakan node bernama dan anonim. Terakhir parse dua kode yang sengaja dirusak.
 
-Di Windows bisa juga klik dua kali `run.bat`.
+`t1b_missing.py`
+Kode JavaScript yang kurung tutupnya hilang. Ini yang memunculkan node `MISSING`.
 
-## Yang ditunjukkan
+`pohon-perkiraan.txt`
+Pohon yang saya tulis sebelum skrip dijalankan, termasuk dua tebakan yang ternyata salah.
 
-1. **Tiga potongan kode** (fungsi, if/else, kelas) → pohonnya masing-masing.
-2. **Node bernama vs anonim**: `def`, `:`, `(`, `)`, `,` tidak tampil di S-expression
-   default, tapi tetap ada dan bisa dicetak lewat `children` + `is_named`.
-3. **Kode dirusak** → node `ERROR`. Di grammar Python, menghapus `:` maupun `)`
-   sama-sama menghasilkan `ERROR`, bukan `MISSING`. `MISSING` muncul di grammar
-   JavaScript (`t1b_missing.py`), jadi keberadaan `ERROR`/`MISSING` bergantung grammar.
+`out/`
+Hasil run, disimpan sebagai bukti.
 
-## Selesai jika
+## Yang perlu diperhatikan di output
 
-Bisa menjelaskan beda `children` dan `named_children` dengan contoh dari kode sendiri:
+Node anonim tidak ikut tercetak di S-expression. `def`, titik dua, `(`, `)`, dan `,` tetap ada di pohon, tapi hanya kelihatan kalau dicetak lewat `children` dan `is_named`. Ini juga beda antara `children` (semua anak) dan `named_children` (hanya yang bernama, dan itulah yang tampil di S-expression).
 
-- `children` = semua anak, termasuk token anonim (`def`, `:`, `(`, `)`, `,`)
-- `named_children` = hanya node yang punya nama di grammar (`identifier`,
-  `parameters`, `block`) — inilah yang tampil di S-expression
+Dua tebakan awal saya salah. `panjang * lebar` ternyata `binary_operator` dengan field `left` dan `right`, bukan satu node biasa. `self.nama` ternyata `attribute` yang berisi `object` dan `attribute`, bukan `identifier`.
 
-## Kerja bareng (Tugas 2 dst.)
+Soal node rusak: menghapus `:` atau `)` di Python sama-sama menghasilkan `ERROR`, bukan `MISSING`. `MISSING` baru muncul di grammar JavaScript, terlihat di `t1b_missing.py` sebagai `MISSING ")"` pada 1:18. Jadi keberadaan keduanya bergantung pada grammar yang dipakai.
 
-- **Tugas 1** dikerjakan Muhammad Iqbal (`iqbalnsola`), ada di root folder ini.
-- **Tugas 2 (penjelajah node)** taruh di folder `tugas2/` agar tidak bentrok:
-  `tugas2/jelajah.py`, `tugas2/kecil.py`, dan hasilnya `tugas2/out/`.
-- Sebelum mulai: `git pull` dulu. Selesai satu langkah: commit dengan pesan
-  spesifik, misalnya `Tugas 2: penjelajah rekursif dengan field dan posisi`,
-  lalu `git push`. Jangan satu commit besar di akhir.
-- Jalankan skrip pakai venv masing-masing (`.venv/` tidak ikut ter-commit),
-  jadi pasang dulu: `uv venv .venv && uv pip install --python
-  .venv/Scripts/python.exe tree-sitter tree-sitter-python tree-sitter-javascript`
+## Pembagian kerja
 
+Tugas 1 dikerjakan Muhammad Iqbal (`iqbalnsola`) dan ada di root folder. Tugas berikutnya taruh di folder sendiri (`tugas2/`, `tugas3/`, dst) supaya tidak bentrok. `git pull` sebelum mulai, commit per langkah dengan pesan yang menyebut langkahnya, jangan satu commit besar di akhir.
+
+Folder `.venv/` tidak ikut ter-commit, jadi pasang ulang setelah clone.
+
+Versi yang dipakai: Python 3.11, tree-sitter 0.26.1, tree-sitter-python 0.25.0, tree-sitter-javascript 0.25.0.
