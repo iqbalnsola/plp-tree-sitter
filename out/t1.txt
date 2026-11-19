@@ -1,0 +1,37 @@
+--- fungsi ---
+(module (function_definition name: (identifier) parameters: (parameters (identifier) (identifier)) body: (block (return_statement (binary_operator left: (identifier) right: (identifier))))))
+
+--- if_else ---
+(module (if_statement condition: (comparison_operator (identifier) (integer)) consequence: (block (expression_statement (call function: (identifier) arguments: (argument_list (string (string_start) (string_content) (string_end)))))) alternative: (else_clause body: (block (expression_statement (call function: (identifier) arguments: (argument_list (string (string_start) (string_content) (string_end)))))))))
+
+--- kelas ---
+(module (class_definition name: (identifier) body: (block (function_definition name: (identifier) parameters: (parameters (identifier) (identifier)) body: (block (expression_statement (assignment left: (attribute object: (identifier) attribute: (identifier)) right: (identifier))))))))
+
+--- rusak_kolom ---
+(module (ERROR (identifier) (parameters (identifier)) (identifier)))
+
+--- rusak_kurung ---
+(module (ERROR (identifier) (identifier)) (return_statement (identifier)))
+
+--- anak-anak function_definition (bernama vs anonim) ---
+def anonim
+identifier bernama
+parameters bernama
+: anonim
+block bernama
+
+--- anak-anak node parameters ---
+( anonim
+identifier bernama
+, anonim
+identifier bernama
+) anonim
+
+--- node rusak: ERROR dan MISSING ---
+tanpa titik dua:
+(module (ERROR (identifier) (parameters (identifier)) (identifier)))
+  ERROR ERROR [1:0]
+
+tanpa tanda tutup kurung:
+(module (ERROR (identifier) (identifier)) (return_statement (identifier)))
+  ERROR ERROR [1:0]

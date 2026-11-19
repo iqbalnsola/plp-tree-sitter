@@ -1,0 +1,71 @@
+PERKIRAAN POHON — ditulis SEBELUM menjalankan t1.py
+====================================================
+
+A. Potongan fungsi
+   def hitung_luas(panjang, lebar):
+       return panjang * lebar
+
+   Perkiraan saya:
+   (module
+     (function_definition
+       name: (identifier)
+       parameters: (parameters (identifier) (identifier))
+       body: (block
+         (return_statement
+           (identifier)))))
+
+   Hasil nyata:
+   body: (block (return_statement (binary_operator
+           left: (identifier) right: (identifier))))
+
+   SELISIH: saya kira `panjang * lebar` jadi satu node biasa. Ternyata
+   itu `binary_operator` yang punya field `left` dan `right`.
+
+B. Potongan if/else
+   if nilai >= 75:
+       print("lulus")
+   else:
+       print("belum lulus")
+
+   Perkiraan saya:
+   (module
+     (if_statement
+       condition: (comparison_operator (identifier) (integer))
+       consequence: (block ...)
+       alternative: (else_clause (block ...))))
+
+   Hasil nyata: SESUAI, hanya saja string dipecah jadi tiga node:
+   (string (string_start) (string_content) (string_end))
+
+C. Potongan kelas
+   class Akun:
+       def __init__(self, nama):
+           self.nama = nama
+
+   Perkiraan saya: `self.nama` adalah `identifier`.
+
+   Hasil nyata: (assignment
+                  left: (attribute object: (identifier) attribute: (identifier))
+                  right: (identifier))
+
+   SELISIH: `self.nama` bukan `identifier`, melainkan node `attribute`
+   yang berisi `object` (self) dan `attribute` (nama).
+
+D. Node anonim (tidak tampil di S-expression default)
+   function_definition: `def` anonim, `:` anonim
+   parameters         : `(` anonim, `,` anonim, `)` anonim
+   -> dicetak manual lewat node.children + node.is_named
+
+E. Kode dirusak
+   Tanpa titik dua  -> (module (ERROR (identifier) (parameters ...) (identifier)))
+   Tanpa kurung tutup -> (module (ERROR ...)) + return_statement
+   Keduanya menghasilkan ERROR, bukan MISSING.
+
+   MISSING baru muncul di grammar lain (JavaScript): lihat t1b_missing.py
+   -> artinya ERROR/MISSING bergantung pada grammar, bukan selalu ada.
+
+Selesai jika: bisa menjelaskan beda children dan named_children
+dengan contoh dari kode sendiri.
+   children       = SEMUA anak, termasuk `def`, `:`, `(`, `)`, `,`
+   named_children = hanya yang punya nama di grammar (identifier,
+                    parameters, block) — inilah yang tampil di S-expression
