@@ -9,7 +9,7 @@ git clone https://github.com/iqbalnsola/plp-tree-sitter.git
 cd plp-tree-sitter
 uv venv .venv
 uv pip install --python .venv/Scripts/python.exe tree-sitter tree-sitter-python tree-sitter-javascript
-.venv/Scripts/python.exe t1.py
+.venv/Scripts/python.exe tugas1-3/t1.py
 ```
 
 Di Windows bisa juga dobel klik `run.bat`.
@@ -23,17 +23,25 @@ python -m venv .venv
 
 ## Isi folder
 
-`t1.py`
+Semua skrip dan bukti output ada di `tugas1-3/`, mengikuti struktur pengumpulan modul.
+
+`tugas1-3/t1.py` — Tugas 1 (Iqbal)
 Parse tiga potongan kode (fungsi, if/else, kelas) dan cetak pohonnya. Lalu cetak anak-anak node `function_definition` dan `parameters` untuk membedakan node bernama dan anonim. Terakhir parse dua kode yang sengaja dirusak.
 
-`t1b_missing.py`
+`tugas1-3/t1b_missing.py` — Tugas 1 (Iqbal)
 Kode JavaScript yang kurung tutupnya hilang. Ini yang memunculkan node `MISSING`.
 
-`pohon-perkiraan.txt`
+`tugas1-3/pohon-perkiraan.txt` — Tugas 1 (Iqbal)
 Pohon yang saya tulis sebelum skrip dijalankan, termasuk dua tebakan yang ternyata salah.
 
-`out/`
-Hasil run, disimpan sebagai bukti.
+`tugas1-3/jelajah.py` — Tugas 2 (Akmal)
+Penjelajah node versi rekursif dan versi `TreeCursor`. Jalankan `python tugas1-3/jelajah.py <file.py>`; tambahkan `--cursor` untuk versi TreeCursor.
+
+`tugas1-3/kecil.py` dan `tugas1-3/contoh_nyata.py` — Tugas 2
+Berkas uji: satu baris, dan file Python nyata 166 baris.
+
+`tugas1-3/out/`
+Hasil run sebagai bukti: `t1.txt`, `t1b_missing.txt`, `hasil_rekursif.txt`, `hasil_cursor.txt`.
 
 ## Yang perlu diperhatikan di output
 
@@ -45,7 +53,14 @@ Soal node rusak: menghapus `:` atau `)` di Python sama-sama menghasilkan `ERROR`
 
 ## Pembagian kerja
 
-Tugas 1 dikerjakan Muhammad Iqbal (`iqbalnsola`) dan ada di root folder. Tugas berikutnya taruh di folder sendiri (`tugas2/`, `tugas3/`, dst) supaya tidak bentrok. `git pull` sebelum mulai, commit per langkah dengan pesan yang menyebut langkahnya, jangan satu commit besar di akhir.
+- Tugas 1: Muhammad Iqbal (`iqbalnsola`)
+- Tugas 2: Muhamad Akmal Rizqillah
+- Tugas 3 dan 4: Muhammad Iqbal
+- Tugas 5 dan 6: Muhamad Akmal Rizqillah
+
+Struktur folder mengikuti modul, bukan per orang: `tugas1-3/` untuk skrip Tugas 1–3 dan outputnya, `tree-sitter-filter/` untuk grammar dan highlight Tugas 4–5, `cek/` untuk Tugas 6. Jangan buat folder per mahasiswa.
+
+`git pull` sebelum mulai. Commit per langkah dengan pesan yang menyebut langkahnya, jangan satu commit besar di akhir.
 
 Folder `.venv/` tidak ikut ter-commit, jadi pasang ulang setelah clone.
 

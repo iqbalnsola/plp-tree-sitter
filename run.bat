@@ -7,6 +7,6 @@ if not exist ".venv\Scripts\python.exe" (
   pause
   exit /b 1
 )
-".venv\Scripts\python.exe" t1.py
+".venv\Scripts\python.exe" "tugas1-3\t1.py"
 echo.
 pause
