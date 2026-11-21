@@ -60,8 +60,9 @@ Soal node rusak: menghapus `:` atau `)` di Python sama-sama menghasilkan `ERROR`
 
 - Tugas 1: Muhammad Iqbal (`iqbalnsola`)
 - Tugas 2: Muhamad Akmal Rizqillah
-- Tugas 3 dan 4: Muhammad Iqbal
-- Tugas 5 dan 6: Muhamad Akmal Rizqillah
+- Tugas 3: Muhammad Iqbal
+- Tugas 4 dan 5: Muhamad Akmal Rizqillah
+- Tugas 6: Muhammad Iqbal
 
 Struktur folder mengikuti modul, bukan per orang: `tugas1-3/` (subfolder `t1/`, `t2/`, `t3/`) untuk skrip Tugas 1–3 dan outputnya, `tree-sitter-filter/` untuk grammar dan highlight Tugas 4–5, `cek/` untuk Tugas 6. Jangan buat folder per mahasiswa.
 
