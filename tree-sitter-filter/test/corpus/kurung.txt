@@ -8,14 +8,14 @@ kurung mengubah prioritas
 
 (query
   (and_expression
-    (parenthesized
+    left: (parenthesized
       (or_expression
-        (comparison
-          (identifier)
-          (number))
-        (comparison
-          (identifier)
-          (number))))
-    (comparison
-      (identifier)
-      (number))))
+        left: (comparison
+          field: (identifier)
+          value: (number))
+        right: (comparison
+          field: (identifier)
+          value: (number))))
+    right: (comparison
+      field: (identifier)
+      value: (number))))

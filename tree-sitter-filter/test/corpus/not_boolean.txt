@@ -8,10 +8,10 @@ not archived = true and x = 1
 
 (query
   (and_expression
-    (not_expression
-      (comparison
-        (identifier)
-        (boolean)))
-    (comparison
-      (identifier)
-      (number))))
+    left: (not_expression
+      operand: (comparison
+        field: (identifier)
+        value: (boolean)))
+    right: (comparison
+      field: (identifier)
+      value: (number))))

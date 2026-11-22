@@ -8,8 +8,8 @@ status = "open"
 
 (query
   (comparison
-    (identifier)
-    (string)))
+    field: (identifier)
+    value: (string)))
 
 ==================
 perbandingan dengan angka dan operator >=
@@ -21,5 +21,18 @@ priority >= 2
 
 (query
   (comparison
-    (identifier)
-    (number)))
+    field: (identifier)
+    value: (number)))
+
+==================
+perbandingan dengan boolean dan nama field bertitik
+==================
+
+customer.vip = true
+
+---
+
+(query
+  (comparison
+    field: (identifier)
+    value: (boolean)))
