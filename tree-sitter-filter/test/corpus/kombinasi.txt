@@ -1,0 +1,17 @@
+==================
+in dan contains digabung and
+==================
+
+status in ("open", "pending") and title contains "invoice"
+
+---
+
+(query
+  (and_expression
+    left: (in_expression
+      field: (identifier)
+      value: (string)
+      value: (string))
+    right: (contains_expression
+      field: (identifier)
+      value: (string))))

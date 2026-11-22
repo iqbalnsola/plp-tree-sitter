@@ -5,7 +5,8 @@ module.exports = grammar({
   rules: {
     query: $ => $._expr,
     _expr: $ => choice(
-      $.comparison, $.in_expression, $.and_expression, $.or_expression,
+      $.comparison, $.in_expression, $.contains_expression,
+      $.and_expression, $.or_expression,
       $.not_expression, $.parenthesized,
     ),
     comparison: $ => seq(
@@ -20,6 +21,11 @@ module.exports = grammar({
       field('value', $._value),
       repeat(seq(',', field('value', $._value))),
       ')',
+    ),
+    contains_expression: $ => seq(
+      field('field', $.identifier),
+      'contains',
+      field('value', $.string),
     ),
     or_expression: $ => prec.left(1, seq(field('left', $._expr), 'or', field('right', $._expr))),
     and_expression: $ => prec.left(2, seq(field('left', $._expr), 'and', field('right', $._expr))),
