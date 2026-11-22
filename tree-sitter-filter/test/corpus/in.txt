@@ -1,0 +1,27 @@
+==================
+in dengan tiga nilai
+==================
+
+status in ("open", "pending", "closed")
+
+---
+
+(query
+  (in_expression
+    field: (identifier)
+    value: (string)
+    value: (string)
+    value: (string)))
+
+==================
+in dengan satu nilai angka
+==================
+
+priority in (1)
+
+---
+
+(query
+  (in_expression
+    field: (identifier)
+    value: (number)))

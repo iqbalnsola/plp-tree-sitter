@@ -1,1 +1,1 @@
-not archived = true and x = 1
+status in ("open", "pending", "closed")
