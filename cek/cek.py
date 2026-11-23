@@ -10,6 +10,15 @@ parser = Parser(PY)
 Q_TODO = Query(PY, '((comment) @c (#match? @c "TODO|FIXME"))')
 Q_FUNGSI = Query(PY, "(function_definition name: (identifier) @nama) @fungsi")
 
+def baris_error(node):
+    if node.is_error or node.is_missing:
+        return node.start_point[0] + 1
+    for child in node.children:
+        hasil = baris_error(child)
+        if hasil:
+            return hasil
+    return None
+
 
 def cek_file(path):
     tree = parser.parse(path.read_bytes())
@@ -24,6 +33,9 @@ def cek_file(path):
         jumlah = fungsi.end_point[0] - fungsi.start_point[0] + 1
         if jumlah > 30:
             print(f"{path}:{fungsi.start_point[0] + 1}: fungsi panjang ({jumlah} baris): {nama}")
+
+    if tree.root_node.has_error:
+        print(f"{path}:{baris_error(tree.root_node)}: error sintaks pada pohon")
 
 
 for path in Path(sys.argv[1]).rglob("*.py"):
