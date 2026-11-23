@@ -6,9 +6,11 @@ from tree_sitter import Language, Parser, Query, QueryCursor
 
 PY = Language(tspython.language())
 parser = Parser(PY)
+LEWATI = {".git", ".venv", "venv", "node_modules", "__pycache__", "build", "dist"}
 
 Q_TODO = Query(PY, '((comment) @c (#match? @c "TODO|FIXME"))')
 Q_FUNGSI = Query(PY, "(function_definition name: (identifier) @nama) @fungsi")
+
 
 def baris_error(node):
     if node.is_error or node.is_missing:
@@ -37,6 +39,12 @@ def cek_file(path):
     if tree.root_node.has_error:
         print(f"{path}:{baris_error(tree.root_node)}: error sintaks pada pohon")
 
+if len(sys.argv) < 2:
+    sys.exit("pakai: python cek.py <folder>")
+
 
 for path in Path(sys.argv[1]).rglob("*.py"):
+    if LEWATI & set(path.parts):
+        continue
     cek_file(path)
+
